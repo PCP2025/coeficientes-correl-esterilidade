@@ -6,9 +6,9 @@ from sklearn.preprocessing import StandardScaler
 import matplotlib.pyplot as plt
 
 # Título
-st.title("📊 Análise de Aprovação de Bolsas de Plasma")
+st.title("📊 Análise da Aprovação do Plasma")
 st.markdown("""
-Este dashboard mostra a **probabilidade estimada de aprovação** de bolsas de plasma em função do tempo de armazenamento até a análise de esterilidade, com base em:
+Este dashboard mostra a **probabilidade** de aprovação do plasma no Teste de Esterilidade em função do tempo de armazenamento das bolsas, com base em:
 - 🔵 Regressão Logística
 - 🟠 Média móvel
 """)
@@ -59,11 +59,11 @@ media_movel = df.groupby('bin')['Resultado'].mean()
 # Classificação de risco
 def faixa_risco_dinamica(p, meta):
     if p >= meta:
-        return 'Baixo risco'
+        return 'Baixo'
     elif p >= 0.5:
-        return 'Médio risco'
+        return 'Médio'
     else:
-        return 'Alto risco'
+        return 'Alto'
 
 riscos = [faixa_risco_dinamica(p, meta) for p in proba_pred]
 
@@ -75,9 +75,9 @@ ax.plot(media_movel.index, media_movel, label='Média móvel', color='orange', l
 # Faixas coloridas
 for i in range(1, len(dias_range)):
     cor = {
-        'Baixo risco': '#A8E6A1',
-        'Médio risco': '#FFF3B0',
-        'Alto risco': '#FFB3B3'
+        'Baixo': '#A8E6A1',
+        'Médio': '#FFF3B0',
+        'Alto': '#FFB3B3'
     }[riscos[i]]
     ax.axvspan(dias_range['Dias'].iloc[i-1], dias_range['Dias'].iloc[i], facecolor=cor, alpha=0.2)
 
@@ -87,8 +87,7 @@ if ponto_meta:
                label=f'Corte para {meta*100:.0f}%: {int(ponto_meta)} dias')
 
 # Finalização do gráfico
-ax.set_title('Resultados da Análise de Esterilidade vs Dias de Armazenamento')
-ax.set_xlabel('Dias até a Análise')
+ax.set_xlabel('Qtd. dias de Armazenamento')
 ax.set_ylabel('Probabilidade estimada de aprovação')
 ax.grid(True)
 ax.legend()
@@ -103,9 +102,9 @@ else:
 # Legenda de risco
 st.markdown(f"""
 ### 🔍 Critérios de risco (baseados na meta de {int(meta * 100)}%):
-- 🟢 **Baixo risco**: ≥ {int(meta * 100)}% de aprovação  
-- 🟡 **Médio risco**: entre 50% e {int(meta * 100)}%  
-- 🔴 **Alto risco**: < 50%
+- 🟢 **Baixo**: ≥ {int(meta * 100)}% de aprovação  
+- 🟡 **Médio**: entre 50% e {int(meta * 100)}%  
+- 🔴 **Alto**: < 50% de aprovação
 """)
 
 # Coeficientes
