@@ -116,7 +116,7 @@ z_value = model.tvalues['Dias']
 valor_p = model.pvalues['Dias']
 
 st.markdown(f"""
-### 📈 Coeficientes do Modelo:
+### 📋 Resumo dos Resultados:
 - **Coeficiente (inclinação)**: {coef:.4f}  
 - **Intercepto**: {intercept:.4f}  
 - **Odds Ratio**: {odds_ratio:.2f}
@@ -125,5 +125,5 @@ st.markdown(f"""
 """)
 
 # Output completo do modelo
-st.markdown("### 📋 Resumo dos parâmetros:")
+st.markdown("### 📈 Coeficientes do Modelo:")
 st.text(model.summary())
