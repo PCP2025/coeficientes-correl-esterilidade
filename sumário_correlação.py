@@ -112,14 +112,18 @@ st.markdown(f"""
 coef = model.params['Dias']
 intercept = model.params['const']
 odds_ratio = np.exp(coef)
+z_value = model.tvalues['Dias']
+valor_p = model.pvalues['Dias']
 
 st.markdown(f"""
 ### 📈 Coeficientes do Modelo:
 - **Coeficiente (inclinação)**: {coef:.4f}  
 - **Intercepto**: {intercept:.4f}  
-- **Odds Ratio**: {odds_ratio:.2f}  
+- **Odds Ratio**: {odds_ratio:.2f}
+- **Estatística z**: {z_value:.4f}  
+- **Valor-p exato**: {valor_p:.50f}  
 """)
 
 # Output completo do modelo
-st.markdown("### 📋 Resumo do modelo (regressão logística):")
+st.markdown("### 📋 Resumo dos parâmetros:")
 st.text(model.summary())
